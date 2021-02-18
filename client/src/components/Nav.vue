@@ -13,8 +13,8 @@
                     <div class="ml-4 font-medium text-sm">FINANCE APP</div>
                 </div>
                 <div class="ml-9 flex items-baseline">
-                    <router-link :to="{name: 'Overview'}" class="px-3 hover:bg-virtus-menu py-2 rounded-md text-sm font-medium">Overview</router-link>
-                    <router-link :to="{name: 'Cashflow'}" class="px-3 hover:bg-virtus-menu py-2 rounded-md text-sm font-medium">Cashflow</router-link>
+                    <router-link @click.native="isActive = 'overview'" :to="{name: 'Overview'}" class="px-3 hover:bg-virtus-menu py-2 rounded-md text-sm font-medium" :class="{'text-virtus-secondary hover:text-white': isActive == 'overview'}">Overview</router-link>
+                    <router-link @click.native="isActive = 'cashflow'" :to="{name: 'Cashflow'}" class="px-3 hover:bg-virtus-menu py-2 rounded-md text-sm font-medium" :class="{'text-virtus-secondary hover:text-white': isActive == 'cashflow'}">Cashflow</router-link>
                     <router-link to="/" class="px-3 hover:bg-virtus-menu py-2 rounded-md text-sm font-medium">Trends</router-link>
                     <router-link to="/" class="px-3 hover:bg-virtus-menu py-2 rounded-md text-sm font-medium">Investments</router-link>
 
@@ -56,7 +56,8 @@ export default {
   },
   data() {
     return {
-      showModal: false
+      showModal: false,
+      isActive: ''
     }
   },
   methods: {

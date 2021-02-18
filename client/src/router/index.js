@@ -10,7 +10,7 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/overview',
+      path: '/',
       name: 'Overview',
       component: Overview,
     },
