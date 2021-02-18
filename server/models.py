@@ -56,7 +56,7 @@ Base.metadata.create_all(engine)
 #     x = Account(accounts=i)
 #     session.add(x)
 #     session.commit()
-
+#
 # input = ['Bydlení > Nájem', 'Bydlení > Energie', 'Bydlení > Další', 'Jídlo > Nákupy', 'Jídlo > Delivery',
 #          'Jídlo > Restaurace', 'Jídlo > Doplňky, nootropika a léky', 'Volný čas > Párty', 'Volný čas > Schůzky',
 #          'Volný čas > Kulturní akce', 'Volný čas > Fitness a sport', 'Volný čas > Cigarety a drogy',
@@ -76,8 +76,8 @@ Base.metadata.create_all(engine)
 # session.add(test_transaction)
 # session.commit()
 
-dummy_data = {'amount': '-454,35', 'fromAccount': 'Twisto', 'toAccount': '', 'category': 'Oblečení',
-              'date': '2021-02-18', 'description': 'Ahoj', 'billable': False}
+dummy_data = {'amount': '-45324,35', 'fromAccount': 'Twisto', 'toAccount': '', 'category': 'Oblečení',
+               'date': '2021-02-18', 'description': 'Ahoj', 'billable': False}
 
 def preprocess_data(data):
     processed_data = {}
@@ -108,10 +108,21 @@ def preprocess_data(data):
 
     return all_data
 
-def postData(processed_data):
+
+def post_data(processed_data):
     data = preprocess_data(processed_data)
     for i in data:
         post = Transaction(account=i["account"], amount=i["amount"], date=i["date"], category=i["category"],
                            description=i["description"], billable=i["billable"])
         session.add(post)
     session.commit()
+
+
+def get_bilance():
+    q = db.session.query(Transaction.account_id, db.func.sum(Transaction.amount).label("total")).group_by(Transaction.account_id).all()
+    bilance = {}
+    bilance["total"] = 0
+    for i in q:
+        bilance[str(i.account_id)] = i.total
+        bilance["total"] += i.total
+    return bilance

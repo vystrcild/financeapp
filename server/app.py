@@ -1,8 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from models import postData
-from calc import final
-
+from models import post_data
 
 # configuration
 DEBUG = True
@@ -15,23 +13,22 @@ app.config.from_object(__name__)
 CORS(app, resources={r'/*': {'origins': '*'}})
 
 
-# sanity check route
-@app.route('/ping', methods=['GET'])
-def ping_pong():
-    return jsonify('pong kundafdsfds!')
+@app.route('/', methods=['GET'])
+def test():
+    return "AHOJ"
 
-@app.route('/expenses', methods=['GET'])
+@app.route('/get', methods=['GET'])
 def get_data():
     return jsonify({
         'status': 'success',
-        'expenses': final
+        'expenses': "test"
     })
 
 @app.route('/send', methods=['GET', 'POST'])
-def post_data():
+def postdata():
     response_object = {'status': 'success'}
     data = request.get_json()
-    postData(data)
+    post_data(data)
     response_object['message'] = "Veryy succeeesss!"
     return jsonify(response_object)
 

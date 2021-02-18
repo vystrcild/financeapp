@@ -47,6 +47,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: "Sidebar",
   data() {
@@ -61,11 +63,23 @@ export default {
       revolut: 0.00,
     };
   },
+  methods: {
+    getBilance(){
+      const path = 'http://localhost:5000/get';
+      axios.get(path)
+        .then((res) => {
+          this.bilance = res.data.bilance;
+        })
+    }
+  },
   computed: {
     formatColor(value) {
       let color = (value > 0) ? "text-virtus-green" : "text-virtus-red";
       return color;
     }
+  },
+  created() {
+    this.getBilance();
   }
 }
 </script>
