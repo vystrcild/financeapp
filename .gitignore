@@ -30,3 +30,4 @@ client/src/assets/styles/index.css
 # Dummy files
 server/calc.py
 server/finance.csv
+server/*.db
