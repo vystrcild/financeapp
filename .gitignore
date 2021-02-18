@@ -1,7 +1,7 @@
 .DS_Store
 client/node_modules
 /dist
-server/__pycache__/calc.cpython-38.pyc
+server/__pycache__/*
 
 
 # local env files
