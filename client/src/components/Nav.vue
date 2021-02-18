@@ -25,10 +25,10 @@
                 <div class="flex items-center">
                 <button @click="toggleModal" class="py-2 px-4 capitalize tracking-wide bg-virtus-primary text-gray-200 text-xs font-medium rounded hover:bg-virtus-menu focus:outline-none focus:bg-gray-700">+ Add Transaction</button>
 
-                <span class="border-2 border-virtus-nav"></span>
+                <span class="hidden border-2 border-virtus-nav"></span>
 
                   <div class="relative">
-                    <button class="relative z-10 block bg-virtus-primary rounded p-2 hover:bg-virtus-menu focus:outline-none focus:bg-gray-700">
+                    <button class="hidden relative z-10 block bg-virtus-primary rounded p-2 hover:bg-virtus-menu focus:outline-none focus:bg-gray-700">
                       <svg class="h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
