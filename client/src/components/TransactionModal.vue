@@ -26,7 +26,7 @@
                 <option value="Revolut">Revolut</option>
               </select>
 
-              <select name="to_account" v-model="toAccount" class="h-9 mt-2 text-sm pt-2 rounded bg-virtus-gray focus:outline-none focus:border-transparent focus:ring-virtus-primary">
+              <select name="to_account" v-model="toAccount" @change="createTransfer" class="h-9 mt-2 text-sm pt-2 rounded bg-virtus-gray focus:outline-none focus:border-transparent focus:ring-virtus-primary">
                 <option value=""> </option>
                 <option value="Twisto">Twisto</option>
                 <option value="Unicredit">Unicredit</option>
@@ -39,6 +39,7 @@
                 <option value="Volný čas > Cigarety a drogy">Volný čas > Cigarety a drogy</option>
                 <option value="Majetek > Nábytek a vybavení">Majetek > Nábytek a vybavení</option>
                 <option value="Práce > OSSZ">Práce > OSSZ</option>
+                <option value="Transfer">Transfer</option>
               </select>
 
               <input type="text" v-model="description" placeholder="Description" class="h-9 mt-2 text-sm pt-2 rounded bg-virtus-gray focus:outline-none focus:border-transparent focus:ring-virtus-primary">
@@ -119,7 +120,13 @@ export default {
     },
     pickDate(value) {
       this.date = value
-    }
+    },
+    createTransfer() {
+      if (this.toAccount) {
+        this.category = "Transfer"
+        this.description = `Transfer from ${this.fromAccount} to ${this.toAccount}`
+      }
+    },
   },
   mounted() {
     this.$refs.amountField.focus()

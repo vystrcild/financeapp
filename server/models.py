@@ -94,13 +94,24 @@ def preprocess_data(data):
     processed_data["billable"] = data["billable"]
 
     if data["toAccount"]:
-        print("Ano")
+        transfer_data = {}
+        transfer_data["amount"] = float(processed_data["amount"]) * -1
+        transfer_data["account"] = session.query(Account).filter_by(accounts=data["toAccount"]).first()
+        transfer_data["category"] = processed_data["category"]
+        transfer_data["date"] = processed_data["date"]
+        transfer_data["description"] = processed_data["description"]
+        transfer_data["billable"] = processed_data["billable"]
 
-    return processed_data
+        all_data = [processed_data, transfer_data]
+    else:
+        all_data = [processed_data]
+
+    return all_data
 
 def postData(processed_data):
     data = preprocess_data(processed_data)
-    post = Transaction(account=data["account"], amount=data["amount"], date=data["date"], category=data["category"],
-                       description=data["description"], billable=data["billable"])
-    session.add(post)
+    for i in data:
+        post = Transaction(account=i["account"], amount=i["amount"], date=i["date"], category=i["category"],
+                           description=i["description"], billable=i["billable"])
+        session.add(post)
     session.commit()
