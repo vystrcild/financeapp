@@ -31,3 +31,4 @@ client/src/assets/styles/index.css
 server/calc.py
 server/finance.csv
 server/*.db
+server/playground.py

@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from models import postData
 from calc import final
 
 
@@ -29,8 +30,8 @@ def get_data():
 @app.route('/send', methods=['GET', 'POST'])
 def post_data():
     response_object = {'status': 'success'}
-    post_data = request.get_json()
-    print(post_data)
+    data = request.get_json()
+    postData(data)
     response_object['message'] = "Veryy succeeesss!"
     return jsonify(response_object)
 

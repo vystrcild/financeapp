@@ -2,7 +2,7 @@ import sqlalchemy as db
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
 
-import datetime
+from datetime import datetime
 
 # Innit DB connection & innit ORM base class
 engine = db.create_engine("sqlite:///db.db")
@@ -56,14 +56,51 @@ Base.metadata.create_all(engine)
 #     x = Account(accounts=i)
 #     session.add(x)
 #     session.commit()
-#
-# input = ["Nákupy", "Jídlo", "Bydlení", "Služby"]
+
+# input = ['Bydlení > Nájem', 'Bydlení > Energie', 'Bydlení > Další', 'Jídlo > Nákupy', 'Jídlo > Delivery',
+#          'Jídlo > Restaurace', 'Jídlo > Doplňky, nootropika a léky', 'Volný čas > Párty', 'Volný čas > Schůzky',
+#          'Volný čas > Kulturní akce', 'Volný čas > Fitness a sport', 'Volný čas > Cigarety a drogy',
+#          'Volný čas > Dovolená', 'Volný čas > Další', 'Hygienické potřeby', 'Oblečení', 'Majetek > Elektronika',
+#          'Majetek > Nábytek a vybavení', 'Majetek > Další', 'Doprava > MHD', 'Doprava > Vlaky, autobusy a jiné',
+#          'Doprava > Další', 'Služby > Holič', 'Služby > Zdravotní náklady', 'Služby > Poplatky a subscriptions',
+#          'Služby > Další', 'Rozvoj a vzdělání > Knihy', 'Rozvoj a vzdělání > Přednášky, konference a kurzy',
+#          'Rozvoj a vzdělání > Další', 'Práce > OSSZ', 'Práce > VZP', 'Práce > Daně a FÚ', 'Práce > Další', 'AppStores',
+#          'Dárky', 'Další výdaje', 'Práce', 'Freelance', 'Bydlení', 'Dary', 'Investiční příjmy', 'Další příjmy']
 # for i in input:
 #     x = Category(categories=i)
 #     session.add(x)
 #     session.commit()
 
-acc = session.query(Account).filter_by(accounts="Unicredit").first()
-test_transaction = Transaction(account=acc, description="Drogy třeba", category_id=3, date=datetime.datetime(2021,1,1), amount=float(45.23), billable=True)
-session.add(test_transaction)
-session.commit()
+# acc = session.query(Account).filter_by(accounts="Unicredit").first()
+# test_transaction = Transaction(account=acc, description="Drogy třeba", category_id=3, date=datetime.datetime(2021,1,1), amount=float(45.23), billable=True)
+# session.add(test_transaction)
+# session.commit()
+
+dummy_data = {'amount': '-454,35', 'fromAccount': 'Twisto', 'toAccount': '', 'category': 'Oblečení',
+              'date': '2021-02-18', 'description': 'Ahoj', 'billable': False}
+
+def preprocess_data(data):
+    processed_data = {}
+
+    # Check for ,/. in numeric value
+    processed_data["amount"] = data["amount"].replace(",", ".")
+
+    # Check if of account
+    processed_data["account"] = session.query(Account).filter_by(accounts=data["fromAccount"]).first()
+    processed_data["category"] = session.query(Category).filter_by(categories=data["category"]).first()
+
+    processed_data["date"] = datetime.strptime(data["date"], "%Y-%m-%d")
+    processed_data["description"] = data["description"]
+    processed_data["billable"] = data["billable"]
+
+    if data["toAccount"]:
+        print("Ano")
+
+    return processed_data
+
+def postData(processed_data):
+    data = preprocess_data(processed_data)
+    post = Transaction(account=data["account"], amount=data["amount"], date=data["date"], category=data["category"],
+                       description=data["description"], billable=data["billable"])
+    session.add(post)
+    session.commit()

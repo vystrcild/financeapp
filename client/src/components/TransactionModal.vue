@@ -35,10 +35,10 @@
               </select>
 
               <select name="category" v-model="category" required class="h-9 mt-2 text-sm pt-2 rounded bg-virtus-gray focus:outline-none focus:border-transparent focus:ring-virtus-primary">
-                <option value="Nákupy">Nákupy</option>
-                <option value="Volný čas">Volný čas</option>
-                <option value="Bydlení">Bydlení</option>
-                <option value="Služby">Služby</option>
+                <option value="Oblečení">Oblečení</option>
+                <option value="Volný čas > Cigarety a drogy">Volný čas > Cigarety a drogy</option>
+                <option value="Majetek > Nábytek a vybavení">Majetek > Nábytek a vybavení</option>
+                <option value="Práce > OSSZ">Práce > OSSZ</option>
               </select>
 
               <input type="text" v-model="description" placeholder="Description" class="h-9 mt-2 text-sm pt-2 rounded bg-virtus-gray focus:outline-none focus:border-transparent focus:ring-virtus-primary">
