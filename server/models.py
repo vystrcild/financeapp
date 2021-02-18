@@ -1,7 +1,6 @@
 import sqlalchemy as db
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.exc import SQLAlchemyError
 
 import datetime
 
@@ -37,11 +36,11 @@ class Transaction(Base):
     """
     __tablename__ = "transactions"
     id = db.Column("id", db.Integer, primary_key=True, autoincrement=True)
-    #account = db.Column("account", db.Integer, db.ForeignKey("accounts.id"), nullable=False)
     account_id = db.Column(db.Integer, db.ForeignKey("accounts.id"))
+    account = relationship("Account")
     description = db.Column("description", db.String)
-    #category_id = db.Column("category", db.Integer, db.ForeignKey("categories.id"), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey("categories.id"))
+    category = relationship("Category")
     date = db.Column("date", db.Date, nullable=False)
     amount = db.Column("amount", db.Float, nullable=False)
     billable = db.Column("billable", db.Boolean)
@@ -52,18 +51,19 @@ class Transaction(Base):
 # Create table(s) if not created yet
 Base.metadata.create_all(engine)
 
-test_transaction = Transaction(account_id=1, description="Tyvole", category_id=2, date=datetime.datetime(2021,1,1), amount=float(-321.23), billable=True)
-session.add(test_transaction)
-session.commit()
-
-# input = ["Cash", "Twisto", "Unicredit", "Revolut"]
+# input = ["Cash", "Twisto", "Unicredit", "Revolut", "Investments"]
 # for i in input:
 #     x = Account(accounts=i)
 #     session.add(x)
 #     session.commit()
-
+#
 # input = ["Nákupy", "Jídlo", "Bydlení", "Služby"]
 # for i in input:
 #     x = Category(categories=i)
 #     session.add(x)
 #     session.commit()
+
+acc = session.query(Account).filter_by(accounts="Unicredit").first()
+test_transaction = Transaction(account=acc, description="Drogy třeba", category_id=3, date=datetime.datetime(2021,1,1), amount=float(45.23), billable=True)
+session.add(test_transaction)
+session.commit()
