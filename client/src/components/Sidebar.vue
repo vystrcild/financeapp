@@ -70,6 +70,7 @@ export default {
       axios.get(path)
         .then((res) => {
           this.bilance = res.data.bilance;
+          this.totalAssetsChange = res.data.assets_change;
         })
     }
   },

@@ -126,4 +126,4 @@ def get_monthly_change():
     change = q2.change - q1.change
     return change
 
-print(get_monthly_change())
+
