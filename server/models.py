@@ -1,8 +1,10 @@
 import sqlalchemy as db
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.exc import SQLAlchemyError
 
-from datetime import datetime
+from datetime import datetime, timedelta
+from playground import output_test
 
 # Innit DB connection & innit ORM base class
 engine = db.create_engine("sqlite:///db.db")
@@ -57,15 +59,7 @@ Base.metadata.create_all(engine)
 #     session.add(x)
 #     session.commit()
 #
-# input = ['Bydlení > Nájem', 'Bydlení > Energie', 'Bydlení > Další', 'Jídlo > Nákupy', 'Jídlo > Delivery',
-#          'Jídlo > Restaurace', 'Jídlo > Doplňky, nootropika a léky', 'Volný čas > Párty', 'Volný čas > Schůzky',
-#          'Volný čas > Kulturní akce', 'Volný čas > Fitness a sport', 'Volný čas > Cigarety a drogy',
-#          'Volný čas > Dovolená', 'Volný čas > Další', 'Hygienické potřeby', 'Oblečení', 'Majetek > Elektronika',
-#          'Majetek > Nábytek a vybavení', 'Majetek > Další', 'Doprava > MHD', 'Doprava > Vlaky, autobusy a jiné',
-#          'Doprava > Další', 'Služby > Holič', 'Služby > Zdravotní náklady', 'Služby > Poplatky a subscriptions',
-#          'Služby > Další', 'Rozvoj a vzdělání > Knihy', 'Rozvoj a vzdělání > Přednášky, konference a kurzy',
-#          'Rozvoj a vzdělání > Další', 'Práce > OSSZ', 'Práce > VZP', 'Práce > Daně a FÚ', 'Práce > Další', 'AppStores',
-#          'Dárky', 'Další výdaje', 'Práce', 'Freelance', 'Bydlení', 'Dary', 'Investiční příjmy', 'Další příjmy']
+
 # for i in input:
 #     x = Category(categories=i)
 #     session.add(x)
@@ -75,9 +69,6 @@ Base.metadata.create_all(engine)
 # test_transaction = Transaction(account=acc, description="Drogy třeba", category_id=3, date=datetime.datetime(2021,1,1), amount=float(45.23), billable=True)
 # session.add(test_transaction)
 # session.commit()
-
-# dummy_data = {'amount': '-45324,35', 'fromAccount': 'Twisto', 'toAccount': '', 'category': 'Oblečení',
-#                'date': '2021-02-18', 'description': 'Ahoj', 'billable': False}
 
 def preprocess_data(data):
     processed_data = {}
@@ -125,3 +116,14 @@ def get_bilance():
         bilance[f"acc_{i.account_id}"] = i.total
         bilance["total"] += i.total
     return bilance
+
+
+def get_monthly_change():
+    FIRST_OF_MONTH = datetime.today().replace(day=1)
+    q1 = session.query(Transaction, db.func.sum(Transaction.amount).label("change")).filter(
+        Transaction.date < FIRST_OF_MONTH).first()
+    q2 = session.query(Transaction, db.func.sum(Transaction.amount).label("change")).first()
+    change = q2.change - q1.change
+    return change
+
+print(get_monthly_change())

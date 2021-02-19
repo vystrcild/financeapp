@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from models import post_data, get_bilance
+from models import post_data, get_bilance, get_monthly_change
 
 # configuration
 DEBUG = True
@@ -21,7 +21,8 @@ def test():
 def get_data():
     return jsonify({
         'status': 'success',
-        'bilance': get_bilance()
+        'bilance': get_bilance(),
+        'assets_change': get_monthly_change()
     })
 
 @app.route('/send', methods=['GET', 'POST'])
