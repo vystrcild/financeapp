@@ -22,25 +22,25 @@
             <div class="flex border-gray-600 border-b">
                     <p class="font-extralight">Cash</p>
                 </div>
-                <div class="flex mt-2 mr-2 justify-end">{{cash | formatCZK }}</div>
+                <div class="flex mt-2 mr-2 justify-end">{{bilance.acc_1 | formatCZK }}</div>
             </div>
             <div class="mt-4">
             <div class="flex border-gray-600 border-b">
                     <p class="font-extralight">Twisto</p>
                 </div>
-                <div class="flex mt-2 mr-2 justify-end">{{twisto | formatCZK }}</div>
+                <div class="flex mt-2 mr-2 justify-end">{{bilance.acc_2 | formatCZK }}</div>
             </div>
             <div class="mt-4">
             <div class="flex border-gray-600 border-b">
                     <p class="font-extralight">Unicredit</p>
                 </div>
-                <div class="flex mt-2 mr-2 justify-end">{{unicredit | formatCZK }}</div>
+                <div class="flex mt-2 mr-2 justify-end">{{bilance.acc_3 | formatCZK }}</div>
             </div>
             <div class="mt-4">
             <div class="flex border-gray-600 border-b">
                     <p class="font-extralight">Revolut</p>
                 </div>
-                <div class="flex mt-2 mr-2 justify-end">{{revolut | formatCZK }}</div>
+                <div class="flex mt-2 mr-2 justify-end">{{bilance.acc_4 | formatCZK }}</div>
             </div>
         </div>
     </aside>

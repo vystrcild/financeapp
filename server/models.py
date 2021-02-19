@@ -122,6 +122,6 @@ def get_bilance():
     bilance = {}
     bilance["total"] = 0
     for i in q:
-        bilance[str(i.account_id)] = i.total
+        bilance[f"acc_{i.account_id}"] = i.total
         bilance["total"] += i.total
     return bilance
