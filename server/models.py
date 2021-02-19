@@ -76,8 +76,8 @@ Base.metadata.create_all(engine)
 # session.add(test_transaction)
 # session.commit()
 
-dummy_data = {'amount': '-45324,35', 'fromAccount': 'Twisto', 'toAccount': '', 'category': 'Oblečení',
-               'date': '2021-02-18', 'description': 'Ahoj', 'billable': False}
+# dummy_data = {'amount': '-45324,35', 'fromAccount': 'Twisto', 'toAccount': '', 'category': 'Oblečení',
+#                'date': '2021-02-18', 'description': 'Ahoj', 'billable': False}
 
 def preprocess_data(data):
     processed_data = {}
@@ -105,7 +105,6 @@ def preprocess_data(data):
         all_data = [processed_data, transfer_data]
     else:
         all_data = [processed_data]
-
     return all_data
 
 
@@ -119,7 +118,7 @@ def post_data(processed_data):
 
 
 def get_bilance():
-    q = db.session.query(Transaction.account_id, db.func.sum(Transaction.amount).label("total")).group_by(Transaction.account_id).all()
+    q = session.query(Transaction.account_id, db.func.sum(Transaction.amount).label("total")).group_by(Transaction.account_id).all()
     bilance = {}
     bilance["total"] = 0
     for i in q:

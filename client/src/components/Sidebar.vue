@@ -6,7 +6,7 @@
         <div class="flex border-gray-600 border-b">
                 <p class="font-extralight">Total Assets</p>
             </div>
-            <div class="flex mt-2 mr-2 justify-end font-sans">{{ totalAssets | formatCZK }}</div>
+            <div class="flex mt-2 mr-2 justify-end font-sans">{{ bilance.total | formatCZK }}</div>
             <div class="flex text-sm mr-2 justify-end" :class="(totalAssetsChange > 0 ? 'text-virtus-green': 'text-virtus-red')">{{ totalAssetsChange | formatCZK }}</div>
         </div>
         <div class="mt-4">
@@ -61,6 +61,7 @@ export default {
       twisto: 23233.32,
       unicredit: 300000.00,
       revolut: 0.00,
+      bilance: 0,
     };
   },
   methods: {
