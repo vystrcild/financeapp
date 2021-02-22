@@ -2,14 +2,19 @@
   <div class="pt-10 pl-48">
     <h1 class="text-white font-light font-sans pt-3 pb-2 text-xl">Investments</h1>
     <div>
-      <p></p>
+      <InvestmentsTable />
     </div>
   </div>
 </template>
 
 <script>
+import InvestmentsTable from "@/components/InvestmentsTable";
+
 export default {
-  name: "Investments"
+  name: "Investments",
+  components: {
+    InvestmentsTable
+  }
 }
 </script>
 
