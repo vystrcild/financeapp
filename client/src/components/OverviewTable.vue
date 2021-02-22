@@ -169,27 +169,27 @@
             <tbody class="font-sans font-light text-sm">
                 <tr class="hover:bg-virtus-menu hover:bg-opacity-30">
                   <td class="pl-4 pt-1">Práce</td>
-                  <td class="text-right pr-20">46736.96</td>
-                  <td class="text-right pr-20">0.00</td>
-                  <td class="text-right pr-20">0</td>
+                  <td class="text-right pr-20">{{ overview.prace_prijmy.last_3M | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ expectationsIncome.prace_prijmy | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ overview.prace_prijmy.this_month | formatCZK }}</td>
                   <td class="flex justify-between items-center text-right pr-6 py-1">
                       <div></div>
                   </td>
                 </tr>
                 <tr class="hover:bg-virtus-menu hover:bg-opacity-30">
                   <td class="pl-4 pt-1">Freelance</td>
-                  <td class="text-right pr-20">10402.17</td>
-                  <td class="text-right pr-20">0</td>
-                  <td class="text-right pr-20">0</td>
+                  <td class="text-right pr-20">{{ overview.freelance.last_3M | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ expectationsIncome.freelance | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ overview.freelance.this_month | formatCZK }}</td>
                   <td class="flex justify-between items-center text-right pr-6 py-1">
                       <div></div>
                   </td>
                 </tr>
                 <tr class="hover:bg-virtus-menu hover:bg-opacity-30">
                   <td class="pl-4 py-1">Další příjmy</td>
-                  <td class="text-right pr-20">4014.39</td>
-                  <td class="text-right pr-20">5000</td>
-                  <td class="text-right pr-20">0</td>
+                  <td class="text-right pr-20">{{ overview.dalsi_prijmy.last_3M | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ expectationsIncome.dalsi_prijmy | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ overview.dalsi_prijmy.this_month | formatCZK }}</td>
                   <td class="flex justify-between items-center text-right pr-6 py-1">
                       <div></div>
                   </td>
@@ -198,9 +198,9 @@
 
                 <tr class="bg-virtus-header font-medium opacity-80">
                   <td class="pl-4 pt-2 pb-2 rounded-bl font-extralight text-xs">TOTAL</td>
-                  <td class="text-right pr-20"></td>
-                  <td class="text-right pr-20"></td>
-                  <td class="text-right pr-20"></td>
+                  <td class="text-right pr-20">{{ overview.prijmy_total.last_3M | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ expectationsIncomeTotal | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ overview.prijmy_total.this_month | formatCZK }}</td>
                   <td class="text-center rounded-br pr-4"></td>
                 </tr>
           </tbody>
@@ -215,9 +215,9 @@
             <thead class="pl-4 bg-virtus-header">
                 <tr>
                     <th class="text-left font-extralight text-base py-2 pl-4 rounded-l">PROFIT</th>
-                    <th class="text-center font-light style-CZK pr-6" id="profit-last3m-total"></th>
-                    <th class="text-center font-light style-CZK pr-9" id="profit-expectations-total"></th>
-                    <th class="text-center font-light style-CZK pr-8 style-negative" id="profit-reality-total"></th>
+                    <th class="text-center font-light pr-6">{{ overview.vydaje_total.last_3M + overview.prijmy_total.last_3M | formatCZK }}</th>
+                    <th class="text-center font-light pr-9">{{ expectationsExpensesTotal + expectationsIncomeTotal | formatCZK }}</th>
+                    <th class="text-center font-light pr-8">{{ overview.vydaje_total.this_month + overview.prijmy_total.this_month | formatCZK }}</th>
                     <th class="w-3/12 text-center font-extralight text-xs pr-5 rounded-r"></th>
                 </tr>
             </thead>
@@ -304,6 +304,11 @@ export default {
         prace_vydaje: 0,
         dalsi_vydaje: -1000
       },
+      expectationsIncome: {
+        prace_prijmy: 0,
+        freelance: 0,
+        dalsi_prijmy:  6500
+      },
     }
   },
   methods: {
@@ -352,6 +357,13 @@ export default {
       let sum = 0
       for (let el in this.expectationsExpenses) {
         sum += parseFloat( this.expectationsExpenses[el]);
+      }
+      return sum
+    },
+    expectationsIncomeTotal: function() {
+      let sum = 0
+      for (let el in this.expectationsIncome) {
+        sum += parseFloat( this.expectationsIncome[el]);
       }
       return sum
     },
