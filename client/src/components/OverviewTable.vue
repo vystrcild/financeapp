@@ -23,7 +23,7 @@
                   <td class="flex justify-between items-center text-right pr-6 py-1">
                       <div class="w-1/2">
                           <div class='border border-virtus-menu h-3 rounded-full'>
-                            <div class='h-full'></div>
+                            <div class='h-full' :class=" computeProgressBar(overview.bydleni.this_month, expectationsExpenses.bydleni)"></div>
                           </div>
                       </div>
                       <div class="style-CZK available-column">{{ overview.bydleni.this_month - expectationsExpenses.bydleni | formatCZK }}</div>
@@ -37,7 +37,7 @@
                   <td class="flex justify-between items-center text-right pr-6 py-1">
                       <div class="w-1/2">
                           <div class='border border-virtus-menu h-3 rounded-full'>
-                            <div class='h-full'></div>
+                            <div class='h-full' :class=" computeProgressBar(overview.jidlo.this_month, expectationsExpenses.jidlo) "></div>
                           </div>
                       </div>
                       <div>{{ overview.jidlo.this_month - expectationsExpenses.jidlo | formatCZK }}</div>
@@ -51,7 +51,7 @@
                   <td class="flex justify-between items-center text-right pr-6 py-1">
                       <div class="w-1/2">
                           <div class='border border-virtus-menu h-3 rounded-full'>
-                            <div class='h-full'></div>
+                            <div class='h-full':class=" computeProgressBar(overview.volny_cas.this_month, expectationsExpenses.volny_cas)"></div>
                           </div>
                       </div>
                       <div>{{ overview.volny_cas.this_month - expectationsExpenses.volny_cas | formatCZK }}</div>
@@ -65,7 +65,7 @@
                   <td class="flex justify-between items-center text-right pr-6 py-1">
                       <div class="w-1/2">
                           <div class='border border-virtus-menu h-3 rounded-full'>
-                            <div class='h-full'></div>
+                            <div class='h-full' :class=" computeProgressBar(overview.majetek.this_month, expectationsExpenses.majetek)"></div>
                           </div>
                       </div>
                       <div>{{ overview.majetek.this_month - expectationsExpenses.majetek | formatCZK }}</div>
@@ -79,7 +79,7 @@
                   <td class="flex justify-between items-center text-right pr-6 py-1">
                       <div class="w-1/2">
                           <div class='border border-virtus-menu h-3 rounded-full'>
-                            <div class='h-full'></div>
+                            <div class='h-full' :class=" computeProgressBar(overview.doprava.this_month, expectationsExpenses.doprava)"></div>
                           </div>
                       </div>
                       <div>{{ overview.doprava.this_month - expectationsExpenses.doprava | formatCZK }}</div>
@@ -93,7 +93,7 @@
                   <td class="flex justify-between items-center text-right pr-6 py-1">
                       <div class="w-1/2">
                           <div class='border border-virtus-menu h-3 rounded-full'>
-                            <div class='h-full'></div>
+                            <div class='h-full' :class=" computeProgressBar(overview.sluzby.this_month, expectationsExpenses.sluzby)"></div>
                           </div>
                       </div>
                       <div>{{ overview.sluzby.this_month - expectationsExpenses.sluzby | formatCZK }}</div>
@@ -107,7 +107,7 @@
                   <td class="flex justify-between items-center text-right pr-6 py-1">
                       <div class="w-1/2">
                           <div class='border border-virtus-menu h-3 rounded-full'>
-                            <div class='h-full'></div>
+                            <div class='h-full' :class=" computeProgressBar(overview.rozvoj_vzdelani.this_month, expectationsExpenses.rozvoj_vzdelani)"></div>
                           </div>
                       </div>
                       <div>{{ overview.rozvoj_vzdelani.this_month - expectationsExpenses.rozvoj_vzdelani | formatCZK }}</div>
@@ -121,7 +121,7 @@
                   <td class="flex justify-between items-center text-right pr-6 py-1">
                       <div class="w-1/2">
                           <div class='border border-virtus-menu h-3 rounded-full'>
-                            <div class='h-full'></div>
+                            <div class='h-full' :class=" computeProgressBar(overview.prace_vydaje.this_month, expectationsExpenses.prace_vydaje)"></div>
                           </div>
                       </div>
                       <div>{{ overview.prace_vydaje.this_month - expectationsExpenses.prace_vydaje | formatCZK }}</div>
@@ -135,7 +135,7 @@
                   <td class="flex justify-between items-center text-right pr-6 py-1">
                       <div class="w-1/2">
                           <div class='border border-virtus-menu h-3 rounded-full'>
-                            <div class='h-full'></div>
+                            <div class='h-full' :class=" computeProgressBar(overview.dalsi_vydaje.this_month, expectationsExpenses.dalsi_vydaje)"></div>
                           </div>
                       </div>
                       <div>{{ overview.dalsi_vydaje.this_month - expectationsExpenses.dalsi_vydaje | formatCZK }}</div>
@@ -313,6 +313,38 @@ export default {
         .then((res) => {
           this.overview = res.data.overview;
         })
+    },
+    computeProgressBar(reality, expectations) {
+      let progress = reality / expectations;
+      if ((progress < 1/12) || (isNaN(progress))){
+          return "bg-virtus-green w-0";
+      } else if (progress <= 1/12){
+          return "bg-virtus-green w-0";
+      } else if (progress <= 2/12){
+          return "bg-virtus-green w-2/12 rounded-l-full";
+      } else if (progress <= 3/12){
+          return "bg-virtus-green w-3/12 rounded-l-full";
+      } else if (progress <= 4/12){
+          return "bg-virtus-green w-4/12 rounded-l-full";
+      } else if (progress <= 5/12){
+          return "bg-virtus-green w-5/12 rounded-l-full";
+      } else if (progress <= 6/12){
+          return "bg-virtus-green w-6/12 rounded-l-full";
+      } else if (progress <= 7/12){
+          return "bg-virtus-green w-7/12 rounded-l-full";
+      } else if (progress <= 8/12){
+          return "bg-yellow-500 w-8/12 rounded-l-full";
+      } else if (progress <= 9/12){
+          return "bg-yellow-500 w-9/12 rounded-l-full";
+      } else if (progress <= 10/12){
+          return "bg-yellow-500 w-10/12 rounded-l-full";
+      } else if (progress <= 11/12){
+          return "bg-yellow-500 w-11/12 rounded-l-full";
+      } else if (progress < 12/12){
+          return "bg-yellow-500 w-11/12 rounded-l-full";
+      } else if (progress >= 12/12){
+          return "bg-virtus-red w-12/12 rounded-full";
+      }
     }
   },
   computed: {
@@ -322,11 +354,11 @@ export default {
         sum += parseFloat( this.expectationsExpenses[el]);
       }
       return sum
-    }
+    },
   },
 
   created() {
-    this.getOverview()
+    this.getOverview();
   }
 }
 </script>
