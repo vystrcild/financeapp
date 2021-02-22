@@ -17,136 +17,136 @@
             <tbody class="font-sans font-light text-sm">
                 <tr class="hover:bg-virtus-menu hover:bg-opacity-30">
                   <td class="pl-4 pt-1">Bydlení</td>
-                  <td class="text-right pr-20 style-CZK">{{ overview.bydleni.last_3M | formatCZK }}</td>
-                  <td class="text-right pr-20 style-CZK">{{ -13250 | formatCZK }}</td>
-                  <td class="text-right pr-20 style-CZK">{{ overview.bydleni.this_month | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ overview.bydleni.last_3M | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ expectationsExpenses.bydleni | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ overview.bydleni.this_month | formatCZK }}</td>
                   <td class="flex justify-between items-center text-right pr-6 py-1">
                       <div class="w-1/2">
                           <div class='border border-virtus-menu h-3 rounded-full'>
                             <div class='h-full'></div>
                           </div>
                       </div>
-                      <div class="style-CZK available-column"></div>
+                      <div class="style-CZK available-column">{{ overview.bydleni.this_month - expectationsExpenses.bydleni | formatCZK }}</div>
                   </td>
                 </tr>
                 <tr class="hover:bg-virtus-menu hover:bg-opacity-30">
                   <td class="pl-4 pt-1">Jídlo</td>
-                  <td class="text-right pr-20 style-CZK">{{ overview.jidlo.last_3M | formatCZK }}</td>
-                  <td class="text-right pr-20 style-CZK">{{ -12000 | formatCZK }}</td>
-                  <td class="text-right pr-20 style-CZK">{{ overview.jidlo.this_month | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ overview.jidlo.last_3M | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ expectationsExpenses.jidlo | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ overview.jidlo.this_month | formatCZK }}</td>
                   <td class="flex justify-between items-center text-right pr-6 py-1">
                       <div class="w-1/2">
                           <div class='border border-virtus-menu h-3 rounded-full'>
                             <div class='h-full'></div>
                           </div>
                       </div>
-                      <div class="style-CZK available-column"></div>
+                      <div>{{ overview.jidlo.this_month - expectationsExpenses.jidlo | formatCZK }}</div>
                   </td>
                 </tr>
                 <tr class="hover:bg-virtus-menu hover:bg-opacity-30">
                   <td class="pl-4 py-1">Volný čas</td>
-                  <td class="text-right pr-20 style-CZK">{{ overview.volny_cas.last_3M | formatCZK }}</td>
-                  <td class="text-right pr-20 style-CZK">{{ -500 | formatCZK }}</td>
-                  <td class="text-right pr-20 style-CZK">{{ overview.volny_cas.this_month | formatCZK }}</td>
+                  <td class="text-right pr-20 ">{{ overview.volny_cas.last_3M | formatCZK }}</td>
+                  <td class="text-right pr-20 ">{{ expectationsExpenses.volny_cas | formatCZK }}</td>
+                  <td class="text-right pr-20 ">{{ overview.volny_cas.this_month | formatCZK }}</td>
                   <td class="flex justify-between items-center text-right pr-6 py-1">
                       <div class="w-1/2">
                           <div class='border border-virtus-menu h-3 rounded-full'>
                             <div class='h-full'></div>
                           </div>
                       </div>
-                      <div class="style-CZK available-column"></div>
+                      <div>{{ overview.volny_cas.this_month - expectationsExpenses.volny_cas | formatCZK }}</div>
                   </td>
                 </tr>
                 <tr class="hover:bg-virtus-menu hover:bg-opacity-30">
                   <td class="pl-4 py-1">Majetek</td>
-                  <td class="text-right pr-20 style-CZK">{{ overview.majetek.last_3M | formatCZK }}</td>
-                  <td class="text-right pr-20 style-CZK">{{ 0 | formatCZK }}</td>
-                  <td class="text-right pr-20 style-CZK">{{ overview.majetek.this_month | formatCZK }}</td>
+                  <td class="text-right pr-20 ">{{ overview.majetek.last_3M | formatCZK }}</td>
+                  <td class="text-right pr-20 ">{{ expectationsExpenses.majetek | formatCZK }}</td>
+                  <td class="text-right pr-20 ">{{ overview.majetek.this_month | formatCZK }}</td>
                   <td class="flex justify-between items-center text-right pr-6 py-1">
                       <div class="w-1/2">
                           <div class='border border-virtus-menu h-3 rounded-full'>
                             <div class='h-full'></div>
                           </div>
                       </div>
-                      <div class="style-CZK available-column"></div>
+                      <div>{{ overview.majetek.this_month - expectationsExpenses.majetek | formatCZK }}</div>
                   </td>
                 </tr>
                 <tr class="hover:bg-virtus-menu hover:bg-opacity-30">
                   <td class="pl-4 py-1">Doprava</td>
-                  <td class="text-right pr-20 style-CZK">{{ overview.doprava.last_3M | formatCZK }}</td>
-                  <td class="text-right pr-20 style-CZK">{{ 0 | formatCZK }}</td>
-                  <td class="text-right pr-20 style-CZK">{{ overview.doprava.this_month | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ overview.doprava.last_3M | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ expectationsExpenses.doprava | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ overview.doprava.this_month | formatCZK }}</td>
                   <td class="flex justify-between items-center text-right pr-6 py-1">
                       <div class="w-1/2">
                           <div class='border border-virtus-menu h-3 rounded-full'>
                             <div class='h-full'></div>
                           </div>
                       </div>
-                      <div class="style-CZK available-column"></div>
+                      <div>{{ overview.doprava.this_month - expectationsExpenses.doprava | formatCZK }}</div>
                   </td>
                 </tr>
                 <tr class="hover:bg-virtus-menu hover:bg-opacity-30">
                   <td class="pl-4 py-1">Služby</td>
-                  <td class="text-right pr-20 style-CZK">{{ overview.sluzby.last_3M | formatCZK }}</td>
-                  <td class="text-right pr-20 style-CZK">{{ -2500 | formatCZK }}</td>
-                  <td class="text-right pr-20 style-CZK">{{ overview.sluzby.this_month | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ overview.sluzby.last_3M | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ expectationsExpenses.sluzby | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ overview.sluzby.this_month | formatCZK }}</td>
                   <td class="flex justify-between items-center text-right pr-6 py-1">
                       <div class="w-1/2">
                           <div class='border border-virtus-menu h-3 rounded-full'>
                             <div class='h-full'></div>
                           </div>
                       </div>
-                      <div class="style-CZK available-column"></div>
+                      <div>{{ overview.sluzby.this_month - expectationsExpenses.sluzby | formatCZK }}</div>
                   </td>
                 </tr>
                 <tr class="hover:bg-virtus-menu hover:bg-opacity-30">
                   <td class="pl-4 py-1">Rozvoj a vzdělání</td>
-                  <td class="text-right pr-20 style-CZK">{{ overview.rozvoj_vzdelani.last_3M | formatCZK }}</td>
-                  <td class="text-right pr-20 style-CZK">{{ -500 | formatCZK }}</td>
-                  <td class="text-right pr-20 style-CZK">{{ overview.rozvoj_vzdelani.this_month | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ overview.rozvoj_vzdelani.last_3M | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ expectationsExpenses.rozvoj_vzdelani | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ overview.rozvoj_vzdelani.this_month | formatCZK }}</td>
                   <td class="flex justify-between items-center text-right pr-6 py-1">
                       <div class="w-1/2">
                           <div class='border border-virtus-menu h-3 rounded-full'>
                             <div class='h-full'></div>
                           </div>
                       </div>
-                      <div class="style-CZK available-column"></div>
+                      <div>{{ overview.rozvoj_vzdelani.this_month - expectationsExpenses.rozvoj_vzdelani | formatCZK }}</div>
                   </td>
                 </tr>
                 <tr class="hover:bg-virtus-menu hover:bg-opacity-30">
                   <td class="pl-4 py-1">Práce</td>
-                  <td class="text-right pr-20 style-CZK">{{ overview.prace_vydaje.last_3M | formatCZK }}</td>
-                  <td class="text-right pr-20 style-CZK">{{ 0 | formatCZK }}</td>
-                  <td class="text-right pr-20 style-CZK">{{ overview.prace_vydaje.this_month | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ overview.prace_vydaje.last_3M | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ expectationsExpenses.prace_vydaje | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ overview.prace_vydaje.this_month | formatCZK }}</td>
                   <td class="flex justify-between items-center text-right pr-6 py-1">
                       <div class="w-1/2">
                           <div class='border border-virtus-menu h-3 rounded-full'>
                             <div class='h-full'></div>
                           </div>
                       </div>
-                      <div class="style-CZK available-column"></div>
+                      <div>{{ overview.prace_vydaje.this_month - expectationsExpenses.prace_vydaje | formatCZK }}</div>
                   </td>
                 </tr>
                 <tr class="hover:bg-virtus-menu hover:bg-opacity-30">
                   <td class="pl-4 py-1">Další výdaje</td>
-                  <td class="text-right pr-20 style-CZK">{{ overview.dalsi_vydaje.last_3M | formatCZK }}</td>
-                  <td class="text-right pr-20 style-CZK">{{ -1000 | formatCZK }}</td>
-                  <td class="text-right pr-20 style-CZK">{{ overview.dalsi_vydaje.this_month | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ overview.dalsi_vydaje.last_3M | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ expectationsExpenses.dalsi_vydaje | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ overview.dalsi_vydaje.this_month | formatCZK }}</td>
                   <td class="flex justify-between items-center text-right pr-6 py-1">
                       <div class="w-1/2">
                           <div class='border border-virtus-menu h-3 rounded-full'>
                             <div class='h-full'></div>
                           </div>
                       </div>
-                      <div class="style-CZK available-column"></div>
+                      <div>{{ overview.dalsi_vydaje.this_month - expectationsExpenses.dalsi_vydaje | formatCZK }}</div>
                   </td>
                 </tr>
                 <tr class="bg-virtus-header font-medium opacity-80">
                   <td class="pl-4 pt-2 pb-2 rounded-bl font-extralight text-xs">TOTAL</td>
-                  <td class="text-right pr-20 style-CZK">{{ overview.vydaje_total.last_3M | formatCZK }}</td>
-                  <td class="text-right pr-20 style-CZK">{{ expectationsExpensesTotal | formatCZK }}</td>
-                  <td class="text-right pr-20 style-CZK">{{ overview.vydaje_total.this_month | formatCZK }}</td>
-                  <td class="text-center rounded-br pr-4 style-CZK font-light text-base style-negative"></td>
+                  <td class="text-right pr-20">{{ overview.vydaje_total.last_3M | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ expectationsExpensesTotal | formatCZK }}</td>
+                  <td class="text-right pr-20">{{ overview.vydaje_total.this_month | formatCZK }}</td>
+                  <td class="text-center rounded-br pr-4 font-light text-base style-negative">{{ overview.vydaje_total.this_month - expectationsExpensesTotal | formatCZK }}</td>
                 </tr>
           </tbody>
         </table>
@@ -169,38 +169,38 @@
             <tbody class="font-sans font-light text-sm">
                 <tr class="hover:bg-virtus-menu hover:bg-opacity-30">
                   <td class="pl-4 pt-1">Práce</td>
-                  <td class="text-right pr-20 style-CZK">46736.96</td>
-                  <td class="text-right pr-20 style-CZK">0.00</td>
-                  <td class="text-right pr-20 style-CZK">0</td>
+                  <td class="text-right pr-20">46736.96</td>
+                  <td class="text-right pr-20">0.00</td>
+                  <td class="text-right pr-20">0</td>
                   <td class="flex justify-between items-center text-right pr-6 py-1">
-                      <div class=""></div>
+                      <div></div>
                   </td>
                 </tr>
                 <tr class="hover:bg-virtus-menu hover:bg-opacity-30">
                   <td class="pl-4 pt-1">Freelance</td>
-                  <td class="text-right pr-20 style-CZK">10402.17</td>
-                  <td class="text-right pr-20 style-CZK">0</td>
-                  <td class="text-right pr-20 style-CZK">0</td>
+                  <td class="text-right pr-20">10402.17</td>
+                  <td class="text-right pr-20">0</td>
+                  <td class="text-right pr-20">0</td>
                   <td class="flex justify-between items-center text-right pr-6 py-1">
-                      <div class=""></div>
+                      <div></div>
                   </td>
                 </tr>
                 <tr class="hover:bg-virtus-menu hover:bg-opacity-30">
                   <td class="pl-4 py-1">Další příjmy</td>
-                  <td class="text-right pr-20 style-CZK">4014.39</td>
-                  <td class="text-right pr-20 style-CZK">5000</td>
-                  <td class="text-right pr-20 style-CZK">0</td>
+                  <td class="text-right pr-20">4014.39</td>
+                  <td class="text-right pr-20">5000</td>
+                  <td class="text-right pr-20">0</td>
                   <td class="flex justify-between items-center text-right pr-6 py-1">
-                      <div class=""></div>
+                      <div></div>
                   </td>
                 </tr>
 
 
                 <tr class="bg-virtus-header font-medium opacity-80">
                   <td class="pl-4 pt-2 pb-2 rounded-bl font-extralight text-xs">TOTAL</td>
-                  <td class="text-right pr-20 style-CZK" id="income-last3m-total"></td>
-                  <td class="text-right pr-20 style-CZK" id="income-expectations-total"></td>
-                  <td class="text-right pr-20 style-CZK" id="income-reality-total"></td>
+                  <td class="text-right pr-20"></td>
+                  <td class="text-right pr-20"></td>
+                  <td class="text-right pr-20"></td>
                   <td class="text-center rounded-br pr-4"></td>
                 </tr>
           </tbody>
@@ -295,9 +295,15 @@ export default {
       },
       expectationsExpenses: {
         bydleni: -13250,
-        jidlo: -12000
+        jidlo: -12000,
+        volny_cas: -500,
+        majetek: 0,
+        doprava: 0,
+        sluzby: -2500,
+        rozvoj_vzdelani: -500,
+        prace_vydaje: 0,
+        dalsi_vydaje: -1000
       },
-      expectationsExpensesTotal : 0
     }
   },
   methods: {
@@ -310,13 +316,12 @@ export default {
     }
   },
   computed: {
-    getExpectationsExpensesTotal() {
+    expectationsExpensesTotal: function() {
       let sum = 0
       for (let el in this.expectationsExpenses) {
         sum += parseFloat( this.expectationsExpenses[el]);
-        console.log(sum)
       }
-      this.expectationsExpensesTotal = sum;
+      return sum
     }
   },
 
