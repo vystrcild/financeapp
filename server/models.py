@@ -13,7 +13,6 @@ from dateutil import relativedelta
 engine = db.create_engine("sqlite:///db.db")
 conn = engine.connect()
 Session = sessionmaker(bind=engine)
-session = Session()
 Base = declarative_base()
 
 FIRST_OF_MONTH = datetime.today().replace(day=1)
@@ -95,6 +94,7 @@ Base.metadata.create_all(engine)
 # session.commit()
 
 def preprocess_data(data):
+    session = Session()
     processed_data = {}
 
     # Check for ,/. in numeric value
@@ -124,6 +124,7 @@ def preprocess_data(data):
 
 
 def post_data(processed_data):
+    session = Session()
     data = preprocess_data(processed_data)
     for i in data:
         post = Transaction(account=i["account"], amount=i["amount"], date=i["date"], category=i["category"],
@@ -133,6 +134,7 @@ def post_data(processed_data):
 
 
 def get_bilance():
+    session = Session()
     q = session.query(Transaction.account_id, db.func.sum(Transaction.amount).label("total")).group_by(
         Transaction.account_id).all()
     bilance = {}
@@ -144,6 +146,7 @@ def get_bilance():
 
 
 def get_monthly_change():
+    session = Session()
     q1 = session.query(Transaction, db.func.sum(Transaction.amount).label("change")).filter(
         Transaction.date < FIRST_OF_MONTH).first()
     q2 = session.query(Transaction, db.func.sum(Transaction.amount).label("change")).first()
@@ -166,5 +169,6 @@ def get_overview():
     return overview
 
 def get_investments():
+    session = Session()
     q = session.query(Investment).all()
     return [r.to_dict() for r in q]
