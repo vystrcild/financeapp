@@ -1,7 +1,8 @@
 import sqlalchemy as db
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy_serializer import SerializerMixin
+
 import pandas as pd
 from config import Category_groups
 
@@ -54,11 +55,26 @@ class Transaction(Base):
     amount = db.Column("amount", db.Float, nullable=False)
     billable = db.Column("billable", db.Boolean)
     __table_args__ = (db.UniqueConstraint("account_id", "description", "category_id", "date", "amount", "billable",
-                                       name="uq_1"),)
+                                          name="uq_1"),)
+
+
+class Investment(Base, SerializerMixin):
+    """
+    DB table - Investments
+    """
+    __tablename__ = "investments"
+    id = db.Column("id", db.Integer, primary_key=True, autoincrement=True)
+    date = db.Column("date", db.Date, nullable=False)
+    service = db.Column("service", db.String, nullable=False)
+    investment = db.Column("investment", db.Float, nullable=False)
+    ticker = db.Column("ticker", db.String, nullable=False)
+    volume = db.Column("volume", db.Float, nullable=False)
+    costs = db.Column("costs", db.Float, nullable=False)
 
 
 # Create table(s) if not created yet
 Base.metadata.create_all(engine)
+
 
 # input = ["Cash", "Twisto", "Unicredit", "Revolut", "Investments"]
 # for i in input:
@@ -73,7 +89,8 @@ Base.metadata.create_all(engine)
 #     session.commit()
 
 # acc = session.query(Account).filter_by(accounts="Unicredit").first()
-# test_transaction = Transaction(account=acc, description="Drogy třeba", category_id=3, date=datetime.datetime(2021,1,1), amount=float(45.23), billable=True)
+# test_transaction = Transaction(account=acc, description="Drogy třeba", category_id=3,
+# date=datetime.datetime(2021,1,1), amount=float(45.23), billable=True)
 # session.add(test_transaction)
 # session.commit()
 
@@ -116,7 +133,8 @@ def post_data(processed_data):
 
 
 def get_bilance():
-    q = session.query(Transaction.account_id, db.func.sum(Transaction.amount).label("total")).group_by(Transaction.account_id).all()
+    q = session.query(Transaction.account_id, db.func.sum(Transaction.amount).label("total")).group_by(
+        Transaction.account_id).all()
     bilance = {}
     bilance["total"] = 0
     for i in q:
@@ -132,6 +150,7 @@ def get_monthly_change():
     change = q2.change - q1.change
     return change
 
+
 def get_overview():
     df = pd.read_sql_table("transactions", con=engine, columns=["category_id", "date", "amount"])
     df_1m = df[(df["date"] >= FIRST_OF_MONTH) & (df["date"] <= LAST_OF_MONTH)]
@@ -143,5 +162,9 @@ def get_overview():
     for category in categories:
         i_1m = df_1m[df_1m["category_id"].isin(getattr(Category_groups, category))]
         i_3m = df_3m[df_3m["category_id"].isin(getattr(Category_groups, category))]
-        overview[category] = {"this_month": i_1m["amount"].sum(), "last_3M": (i_3m["amount"].sum()/3)}
+        overview[category] = {"this_month": i_1m["amount"].sum(), "last_3M": (i_3m["amount"].sum() / 3)}
     return overview
+
+def get_investments():
+    q = session.query(Investment).all()
+    return [r.to_dict() for r in q]

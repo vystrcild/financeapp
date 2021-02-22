@@ -53,14 +53,14 @@ export default {
   name: "Sidebar",
   data() {
     return {
-      totalAssets: 123456,
-      totalAssetsChange: -12345.32,
+      totalAssets: 0,
+      totalAssetsChange: 0,
       totalInvestments: 628666.32,
       totalInvestmentsChange: 2132.32,
-      cash: 4181.00,
-      twisto: 23233.32,
-      unicredit: 300000.00,
-      revolut: 0.00,
+      cash: 0,
+      twisto: 0,
+      unicredit: 0,
+      revolut: 0,
       bilance: 0,
     };
   },
