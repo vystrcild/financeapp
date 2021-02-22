@@ -2,9 +2,11 @@ import sqlalchemy as db
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.exc import SQLAlchemyError
+import pandas as pd
+from config import Category_groups
 
 from datetime import datetime, timedelta
-from playground import output_test
+from dateutil import relativedelta
 
 # Innit DB connection & innit ORM base class
 engine = db.create_engine("sqlite:///db.db")
@@ -12,6 +14,11 @@ conn = engine.connect()
 Session = sessionmaker(bind=engine)
 session = Session()
 Base = declarative_base()
+
+FIRST_OF_MONTH = datetime.today().replace(day=1)
+LAST_OF_MONTH = FIRST_OF_MONTH + relativedelta.relativedelta(months=1) - timedelta(days=1)
+LAST_3M_START = FIRST_OF_MONTH - relativedelta.relativedelta(months=3)
+LAST_3M_END = FIRST_OF_MONTH - timedelta(days=1)
 
 
 class Account(Base):
@@ -119,11 +126,22 @@ def get_bilance():
 
 
 def get_monthly_change():
-    FIRST_OF_MONTH = datetime.today().replace(day=1)
     q1 = session.query(Transaction, db.func.sum(Transaction.amount).label("change")).filter(
         Transaction.date < FIRST_OF_MONTH).first()
     q2 = session.query(Transaction, db.func.sum(Transaction.amount).label("change")).first()
     change = q2.change - q1.change
     return change
 
+def get_overview():
+    df = pd.read_sql_table("transactions", con=engine, columns=["category_id", "date", "amount"])
+    df_1m = df[(df["date"] >= FIRST_OF_MONTH) & (df["date"] <= LAST_OF_MONTH)]
+    df_3m = df[(df["date"] >= LAST_3M_START) & (df["date"] <= LAST_3M_END)]
 
+    overview = {}
+    categories = ["bydleni", "jidlo", "volny_cas", "majetek", "doprava", "sluzby", "rozvoj_vzdelani", "prace_vydaje",
+                  "dalsi_vydaje", "prace_prijmy", "freelance", "dalsi_prijmy", "vydaje_total", "prijmy_total"]
+    for category in categories:
+        i_1m = df_1m[df_1m["category_id"].isin(getattr(Category_groups, category))]
+        i_3m = df_3m[df_3m["category_id"].isin(getattr(Category_groups, category))]
+        overview[category] = {"this_month": i_1m["amount"].sum(), "last_3M": (i_3m["amount"].sum()/3)}
+    return overview
