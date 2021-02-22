@@ -20,9 +20,12 @@
                 <tr v-for="item in investments" :key= "item.id" class="hover:bg-virtus-menu hover:bg-opacity-30">
                   <td class="pl-4 pt-1">{{ item.ticker }}</td>
                   <td class="text-center">{{ item.date }}</td>
-                  <td class="text-right">{{ item.investment }}</td>
+                  <td class="text-right">{{ item.investment | formatCZK }}</td>
                   <td class="text-right">{{ item.volume }}</td>
-                  <td class="text-right">VALUE</td>
+                  <td v-if="item.ticker == 'BTC'" class="text-right">{{ item.volume * getRealValueBTC | formatCZK }}</td>
+                  <td v-else-if="item.ticker == 'LTC'" class="text-right">{{ item.volume * getRealValueLTC | formatCZK }}</td>
+                  <td v-else-if="item.ticker == 'ETH'" class="text-right">{{ item.volume * getRealValueETH | formatCZK }}</td>
+                  <td v-else class="text-right">NOPE</td>
                   <td class="text-right">PROFIT</td>
                   <td class="text-right pr-8">ROI</td>
                 </tr>
@@ -41,6 +44,9 @@
         </table>
         <!-- END OF INVESTMENTS TABLE -->
   </div>
+    <p>{{ USDCZKrate }}</p>
+    <p>{{ BTCUSDrate }}</p>
+    <p>{{ getRealValueBTC }}</p>
     </div>
 
 </template>
@@ -58,7 +64,11 @@ export default {
         date: 0,
         volume: 0,
         id: 0
-      }
+      },
+      USDCZKrate: 0,
+      BTCUSDrate: 0,
+      LTCUSDrate: 0,
+      ETHUSDrate: 0,
     }
   },
   methods: {
@@ -72,6 +82,28 @@ export default {
   },
   created() {
     this.getInvestments();
+  },
+  mounted() {
+    axios.get('https://api.exchangeratesapi.io/latest?base=USD&symbols=CZK')
+      .then(response => (this.USDCZKrate = response.data.rates.CZK));
+    axios.get('https://api.coincap.io/v2/rates/bitcoin')
+      .then(response => (this.BTCUSDrate = response.data.data.rateUsd));
+    axios.get('https://api.coincap.io/v2/rates/litecoin')
+      .then(response => (this.LTCUSDrate = response.data.data.rateUsd));
+    axios.get('https://api.coincap.io/v2/rates/ethereum')
+      .then(response => (this.ETHUSDrate = response.data.data.rateUsd));
+  },
+  computed: {
+    getRealValueBTC: function(){
+      return this.rate = this.BTCUSDrate * this.USDCZKrate
+    },
+    getRealValueLTC: function(){
+      return this.rate = this.LTCUSDrate * this.USDCZKrate
+    },
+    getRealValueETH: function(){
+      return this.rate = this.ETHUSDrate * this.USDCZKrate
+    },
+
   }
 }
 </script>
