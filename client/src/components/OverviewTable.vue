@@ -144,7 +144,7 @@
                 <tr class="bg-virtus-header font-medium opacity-80">
                   <td class="pl-4 pt-2 pb-2 rounded-bl font-extralight text-xs">TOTAL</td>
                   <td class="text-right pr-20 style-CZK">{{ overview.vydaje_total.last_3M | formatCZK }}</td>
-                  <td class="text-right pr-20 style-CZK"></td>
+                  <td class="text-right pr-20 style-CZK">{{ expectationsExpensesTotal | formatCZK }}</td>
                   <td class="text-right pr-20 style-CZK">{{ overview.vydaje_total.this_month | formatCZK }}</td>
                   <td class="text-center rounded-br pr-4 style-CZK font-light text-base style-negative"></td>
                 </tr>
@@ -235,7 +235,69 @@ export default {
   name: "OverviewTable",
   data() {
     return {
-      overview: 0
+      overview: {
+        bydleni: {
+          last_3M: 0,
+          this_month: 0,
+        },
+        jidlo: {
+          last_3M: 0,
+          this_month: 0,
+        },
+        volny_cas: {
+          last_3M: 0,
+          this_month: 0,
+        },
+        majetek: {
+          last_3M: 0,
+          this_month: 0,
+        },
+        doprava: {
+          last_3M: 0,
+          this_month: 0,
+        },
+        sluzby: {
+          last_3M: 0,
+          this_month: 0,
+        },
+        rozvoj_vzdelani: {
+          last_3M: 0,
+          this_month: 0,
+        },
+        prace_vydaje: {
+          last_3M: 0,
+          this_month: 0,
+        },
+        dalsi_vydaje: {
+          last_3M: 0,
+          this_month: 0,
+        },
+        prace_prijmy: {
+          last_3M: 0,
+          this_month: 0,
+        },
+        freelance: {
+          last_3M: 0,
+          this_month: 0,
+        },
+        dalsi_prijmy: {
+          last_3M: 0,
+          this_month: 0,
+        },
+        vydaje_total: {
+          last_3M: 0,
+          this_month: 0,
+        },
+        prijmy_total: {
+          last_3M: 0,
+          this_month: 0,
+        },
+      },
+      expectationsExpenses: {
+        bydleni: -13250,
+        jidlo: -12000
+      },
+      expectationsExpensesTotal : 0
     }
   },
   methods: {
@@ -247,6 +309,17 @@ export default {
         })
     }
   },
+  computed: {
+    getExpectationsExpensesTotal() {
+      let sum = 0
+      for (let el in this.expectationsExpenses) {
+        sum += parseFloat( this.expectationsExpenses[el]);
+        console.log(sum)
+      }
+      this.expectationsExpensesTotal = sum;
+    }
+  },
+
   created() {
     this.getOverview()
   }
