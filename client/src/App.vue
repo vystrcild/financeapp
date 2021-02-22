@@ -13,6 +13,7 @@ import Nav from './components/Nav.vue';
 import Sidebar from './components/Sidebar.vue';
 import Overview from './components/Overview.vue';
 import Cashflow from './components/Cashflow.vue';
+import Investments from './components/Investments.vue';
 import TransactionModal from './components/TransactionModal.vue';
 import DatePicker from './components/DatePicker.vue';
 
@@ -24,7 +25,8 @@ export default {
     Overview,
     Cashflow,
     TransactionModal,
-    DatePicker
+    DatePicker,
+    Investments
   },
 };
 </script>
