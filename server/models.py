@@ -21,7 +21,7 @@ LAST_3M_START = FIRST_OF_MONTH - relativedelta.relativedelta(months=3)
 LAST_3M_END = FIRST_OF_MONTH - timedelta(days=1)
 
 
-class Account(Base):
+class Account(Base, SerializerMixin):
     """
     DB table - Accounts
     """
@@ -30,7 +30,7 @@ class Account(Base):
     accounts = db.Column("accounts", db.String, unique=True, nullable=False)
 
 
-class Category(Base):
+class Category(Base, SerializerMixin):
     """
     DB table - Categories
     """
@@ -39,7 +39,7 @@ class Category(Base):
     categories = db.Column("categories", db.String, unique=True, nullable=False)
 
 
-class Transaction(Base):
+class Transaction(Base, SerializerMixin):
     """
     DB table - Transactions
     """
@@ -171,4 +171,9 @@ def get_overview():
 def get_investments():
     session = Session()
     q = session.query(Investment).all()
+    return [r.to_dict() for r in q]
+
+def get_transactions():
+    session = Session()
+    q = session.query(Transaction).all()
     return [r.to_dict() for r in q]

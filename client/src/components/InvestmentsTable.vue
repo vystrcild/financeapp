@@ -67,6 +67,8 @@ export default {
       LTCUSDrate: 0,
       ETHUSDrate: 0,
       totalValue: 0,
+      currentSort: "date",
+      currentSortDir: "asc"
     }
   },
   methods: {
@@ -91,7 +93,7 @@ export default {
         .then(response => (this.LTCUSDrate = response.data.data.rateUsd));
       axios.get('https://api.coincap.io/v2/rates/ethereum')
         .then(response => (this.ETHUSDrate = response.data.data.rateUsd));
-    }
+    },
   },
   created() {
     this.getInvestments();
@@ -122,8 +124,6 @@ export default {
       }
       return sum
     },
-
-
   }
 }
 </script>

@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from models import post_data, get_bilance, get_monthly_change, get_overview, get_investments
+from models import post_data, get_bilance, get_monthly_change, get_overview, get_investments, get_transactions
 
 # configuration
 DEBUG = True
@@ -30,6 +30,13 @@ def get_overview_endpoint():
     return jsonify({
         'status': 'success',
         'overview': get_overview(),
+    })
+
+@app.route('/transactions', methods=['GET'])
+def get_transactions_endpoint():
+    return jsonify({
+        'status': 'success',
+        'transactions': get_transactions()[:10],
     })
 
 @app.route('/investments', methods=['GET'])
