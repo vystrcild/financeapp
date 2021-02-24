@@ -6,7 +6,7 @@
         <table class="table-fixed w-full" id="investments">
             <thead class="pl-4 bg-virtus-header">
                 <tr>
-                    <th class="w-20 text-center font-extralight text-xs py-2 pl-4 rounded-tl">DATE</th>
+                    <th @click="sort('date')" class="w-20 text-center font-extralight text-xs py-2 pl-4 rounded-tl">DATE</th>
                     <th class="w-28 text-right font-extralight text-xs">ACCOUNT</th>
                     <th class="w-3/12 text-right font-extralight text-xs">DESCRIPTION</th>
                     <th class="w-3/12 text-right font-extralight text-xs">CATEGORY</th>
@@ -15,7 +15,7 @@
             </thead>
             <tbody class="font-sans font-light text-sm">
 
-                <tr v-for="item in transactions" :key= "item.id" class="hover:bg-virtus-menu hover:bg-opacity-30">
+                <tr v-for="item in sortedTransactions" :key= "item.id" class="hover:bg-virtus-menu hover:bg-opacity-30">
                   <td class="text-right">{{ item.date }}</td>
                   <td class="text-right">{{item.account.accounts}}</td>
                   <td class="text-right">{{ item.description }}</td>
@@ -45,19 +45,9 @@ export default {
   name: "CashflowTable",
   data() {
     return {
-      transactions: {
-        account: {
-          accounts: ""
-        },
-        amount: 0,
-        billable: "",
-        category: {
-          categories: ""
-        },
-        date: "",
-        description: "",
-        id: ""
-      }
+      transactions: [],
+      currentSort: 'date',
+      currentSortDir: 'desc'
     }
   },
   methods: {
@@ -68,6 +58,24 @@ export default {
           this.transactions = res.data.transactions;
         })
     },
+    sort: function(s) {
+    //if s == current sort, reverse
+    if(s === this.currentSort) {
+      this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
+    }
+    this.currentSort = s;
+    },
+  },
+  computed: {
+    sortedTransactions: function() {
+    return this.transactions.sort((a,b) => {
+      let modifier = 1;
+      if(this.currentSortDir === 'desc') modifier = -1;
+      if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+      if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+      return 0;
+    });
+  }
   },
   created() {
     this.getTransactions();
