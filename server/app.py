@@ -36,7 +36,7 @@ def get_overview_endpoint():
 def get_transactions_endpoint():
     return jsonify({
         'status': 'success',
-        'transactions': get_transactions()[:10],
+        'transactions': get_transactions(),
     })
 
 @app.route('/investments', methods=['GET'])

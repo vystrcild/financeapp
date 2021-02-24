@@ -13,3 +13,4 @@ class Category_groups:
     dalsi_prijmy = [39, 40, 41, 42]
     vydaje_total = [i for i in range(1, 37)]
     prijmy_total = [i for i in range(37, 43)]
+    transfer = [43]

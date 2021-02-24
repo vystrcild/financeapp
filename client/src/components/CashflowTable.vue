@@ -28,13 +28,23 @@
                   <td class="text-right"></td>
                   <td class="text-right"></td>
                   <td class="text-right"></td>
-                  <td class="text-right rounded-br pr-8"></td>
+                  <td class="text-right rounded-br pr-4">{{ amountTotal | formatCZK }}</td>
                 </tr>
 
           </tbody>
         </table>
+
     </div>
         <!-- END OF CASHFLOW TABLE -->
+    <div class="flex justify-center font-extralight text-sm space-x-2 mt-2">
+      <button @click="prevPage"><svg class="w-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+</svg></button>
+      <p>{{currentPage}} / {{ Math.ceil(this.transactions.length / pageSize)}}</p>
+      <button @click="nextPage"><svg class="w-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+</svg></button>
+    </div>
   </div>
 </template>
 
@@ -47,9 +57,12 @@ export default {
     return {
       transactions: [],
       currentSort: 'date',
-      currentSortDir: 'desc'
+      currentSortDir: 'desc',
+      pageSize:20,
+      currentPage:1
     }
   },
+
   methods: {
     getTransactions() {
       const path = 'http://localhost:5000/transactions';
@@ -65,7 +78,14 @@ export default {
     }
     this.currentSort = s;
     },
+    nextPage:function() {
+      if((this.currentPage*this.pageSize) < this.transactions.length) this.currentPage++;
+    },
+    prevPage:function() {
+      if(this.currentPage > 1) this.currentPage--;
+    },
   },
+
   computed: {
     sortedTransactions: function() {
     return this.transactions.sort((a,b) => {
@@ -74,8 +94,19 @@ export default {
       if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
       if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
       return 0;
-    });
-  }
+    }).filter((row, index) => {
+		let start = (this.currentPage-1)*this.pageSize;
+		let end = this.currentPage*this.pageSize;
+		if(index >= start && index < end) return true;
+	    });
+    },
+    amountTotal: function() {
+      let sum = 0
+      for (let el in this.sortedTransactions) {
+        sum += parseFloat( this.sortedTransactions[el].amount);
+      }
+      return sum
+    },
   },
   created() {
     this.getTransactions();
