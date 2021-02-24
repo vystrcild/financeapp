@@ -3,7 +3,6 @@
 
     <Nav />
     <Sidebar />
-    <h1>Welcome to my APP!!!</h1>
     <router-view/>
   </div>
 </template>
@@ -13,6 +12,7 @@ import Nav from './components/Nav.vue';
 import Sidebar from './components/Sidebar.vue';
 import Overview from './components/Overview.vue';
 import Cashflow from './components/Cashflow.vue';
+import Trends from './components/Trends.vue';
 import Investments from './components/Investments.vue';
 import TransactionModal from './components/TransactionModal.vue';
 import DatePicker from './components/DatePicker.vue';
@@ -26,7 +26,8 @@ export default {
     Cashflow,
     TransactionModal,
     DatePicker,
-    Investments
+    Investments,
+    Trends
   },
 };
 </script>

@@ -36,15 +36,21 @@
 
     </div>
         <!-- END OF CASHFLOW TABLE -->
+
+    <!-- PAGINATION -->
     <div class="flex justify-center font-extralight text-sm space-x-2 mt-2">
       <button @click="prevPage"><svg class="w-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-</svg></button>
-      <p>{{currentPage}} / {{ Math.ceil(this.transactions.length / pageSize)}}</p>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg></button>
+      <p>{{currentPage}} / {{ Math.ceil(itemsFiltered / pageSize)}}</p>
+      <p>{{ itemsFiltered }}</p>
       <button @click="nextPage"><svg class="w-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-</svg></button>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg></button>
     </div>
+
+    <input class="h-9 mt-2 text-sm pt-2 rounded bg-virtus-gray focus:outline-none focus:border-transparent focus:ring-virtus-primary" type="text" placeholder="Filter" v-model="filter" />
+
   </div>
 </template>
 
@@ -59,7 +65,9 @@ export default {
       currentSort: 'date',
       currentSortDir: 'desc',
       pageSize:20,
-      currentPage:1
+      currentPage:1,
+      filter: "",
+      itemsFiltered: 0,
     }
   },
 
@@ -90,16 +98,24 @@ export default {
     sortedTransactions: function() {
     return this.transactions.sort((a,b) => {
       let modifier = 1;
-      if(this.currentSortDir === 'desc') modifier = -1;
-      if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
-      if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+      if (this.currentSortDir === 'desc') modifier = -1;
+      if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+      if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
       return 0;
-    }).filter((row, index) => {
-		let start = (this.currentPage-1)*this.pageSize;
-		let end = this.currentPage*this.pageSize;
-		if(index >= start && index < end) return true;
+    })
+      .filter(row => {
+        let description = row.description.toLowerCase();
+        let searchTerm = this.filter.toLowerCase();
+        return description.includes(searchTerm);
+    })
+      .filter((row, index) => {
+        this.itemsFiltered = index + 1; // number of items filtered
+        let start = (this.currentPage-1)*this.pageSize;
+        let end = this.currentPage*this.pageSize;
+        if(index >= start && index < end) return true;
 	    });
     },
+
     amountTotal: function() {
       let sum = 0
       for (let el in this.sortedTransactions) {
