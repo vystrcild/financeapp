@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="flex items-center">
-                <div class="flex justify-center h-screen">
+                <div class="flex justify-center">
                 <div class="flex items-center">
                 <button @click="toggleModal" class="py-2 px-4 capitalize tracking-wide bg-virtus-primary text-gray-200 text-xs font-medium rounded hover:bg-virtus-menu focus:outline-none focus:bg-gray-700">+ Add Transaction</button>
 
