@@ -1,2 +1,3 @@
 # Personal Finance App
-Currently work in progress. MVP coming soon...
+Full-stack web app for managing financial cashflow, monthly budgets and investment portfolio.
+
