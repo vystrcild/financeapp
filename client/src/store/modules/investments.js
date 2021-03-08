@@ -1,31 +1,58 @@
 import axios from 'axios';
 
-
 const state = {
-  investmentsTotalValue: 11.232,
-  BTCUSDrateValue: 12,
+  USDCZKrate: "",
+  BTCUSDrate: "",
+  LTCUSDrate: "",
+  ETHUSDrate: "",
+  BTCCZKrate: "",
 };
 
 const getters = {
-  getInvestmentsTotalValue: state => state.investmentsTotalValue,
-  getBTCUSDrateValue: state => state.BTCUSDrateValue
+  getUSDCZKrate: state => state.USDCZKrate,
+  getBTCUSDrate: state => state.BTCUSDrate,
+  getBTCCZKrate: state => {
+    return state.USDCZKrate * state.BTCUSDrate;
+  },
+  test: state => state.BTCCZKrate,
 };
 
 const actions = {
   async getCryptoRates({ commit }) {
-    const response = await axios.get(
+    const responseBTC = await axios.get(
       'https://api.coincap.io/v2/rates/bitcoin'
     );
-    console.log(response);
-
-    commit('setRate', response.data.data.rateUsd);
-  }
+    const responseLTC = await axios.get(
+      'https://api.coincap.io/v2/rates/litecoin'
+    );
+    const responseETH = await axios.get(
+      'https://api.coincap.io/v2/rates/ethereum'
+    );
+    commit('setRates', [
+      responseBTC.data.data.rateUsd,
+      responseLTC.data.data.rateUsd,
+      responseETH.data.data.rateUsd,
+    ]);
+  },
+  async getCZKRate({ commit }) {
+    const response = await axios.get(
+      'https://api.exchangeratesapi.io/latest?base=USD&symbols=CZK'
+    );
+    commit('setCZK', response.data.rates.CZK);
+  },
 };
 
 const mutations = {
-  setRate: (state, rate) => (state.BTCUSDrateValue = rate),
+  setRates: (state, rates) => {
+    state.BTCUSDrate = rates[0];
+    state.LTCUSDrate = rates[1];
+    state.ETHUSDrate = rates[2];
+  },
+  setCZK: (state, rate) => (state.USDCZKrate = rate),
+  setBTCCZKrate (state) {
+    state.BTCCZKrate = state.USDCZKrate * state.BTCUSDrate;
+  }
 };
-
 
 export default {
   state,

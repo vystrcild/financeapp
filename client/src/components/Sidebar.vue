@@ -15,8 +15,8 @@
             </div>
             <div class="flex mt-2 mr-2 justify-end">{{totalInvestments | formatCZK }}</div>
             <div class="flex text-sm mr-2 justify-end" :class="(totalInvestmentsChange > 0 ? 'text-virtus-green': 'text-virtus-red')">{{totalInvestmentsChange | formatCZK }}</div>
-            <div>{{ getInvestmentsTotalValue }}</div>
-          <div>{{ getBTCUSDrateValue }}</div>
+
+
         </div>
         </div>
         <div class="mx-4 mb-4">
@@ -50,7 +50,7 @@
 
 <script>
 import axios from 'axios';
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 
 export default {
   name: "Sidebar",
@@ -58,7 +58,7 @@ export default {
     return {
       totalAssets: 0,
       totalAssetsChange: 0,
-      totalInvestments: 628666.32,
+      totalInvestments: 666666.66,
       totalInvestmentsChange: 2132.32,
       cash: 0,
       twisto: 0,
@@ -76,13 +76,21 @@ export default {
           this.totalAssetsChange = res.data.assets_change;
         })
     },
-    ...mapActions(["getCryptoRates"])
+    ...mapActions(["getCryptoRates", "getCZKRate"]),
+    ...mapMutations(['setBTCCZKrate'])
   },
-  computed: mapGetters(['getInvestmentsTotalValue','getBTCUSDrateValue']),
+  computed: {
+    ...mapGetters(['getBTCUSDrate','getUSDCZKrate', 'getBTCCZKrate', 'test']),
+  },
 
   created() {
     this.getBilance();
     this.getCryptoRates();
+    this.getCZKRate();
+
+  },
+  beforeUpdate() {
+    this.setBTCCZKrate();
   }
 }
 </script>
